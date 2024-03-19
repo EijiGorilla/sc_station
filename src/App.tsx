@@ -113,8 +113,10 @@ function App() {
     view.environment.atmosphereEnabled = false;
   }, []);
 
-  buildingLayer.load().then(() => {
-    setBuildingLayerLoaded(buildingLayer.loadStatus);
+  useEffect(() => {
+    buildingLayer.load().then(() => {
+      setBuildingLayerLoaded(buildingLayer.loadStatus);
+    });
   });
 
   useEffect(() => {
