@@ -41,10 +41,10 @@ export const view = new SceneView({
   camera: {
     position: {
       x: 120.98443135,
-      y: 14.6223954,
-      z: 2500,
+      y: 14.6211854,
+      z: 250,
     },
-    tilt: 65,
+    tilt: 35,
   },
   viewingMode: 'local',
   environment: {

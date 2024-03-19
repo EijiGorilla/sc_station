@@ -49,7 +49,7 @@ const Chart = () => {
       setProgress(response);
     });
 
-    zoomToLayer(stFramingLayer);
+    // zoomToLayer(stFramingLayer);
   }, []);
 
   // Define parameters
