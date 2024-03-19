@@ -36,6 +36,7 @@ import {
 } from '@esri/calcite-components-react';
 import Chart from './components/Chart';
 import {
+  buildingLayer,
   floorsLayer,
   stColumnLayer,
   stFoundationLayer,
@@ -57,8 +58,8 @@ function App() {
   const [activeWidget, setActiveWidget] = useState<undefined | any | unknown>(null);
   const [nextWidget, setNextWidget] = useState<undefined | any | unknown>(null);
 
-  // Calcite switch for see-through-ground
-  const [underground, setUnderground] = useState<boolean>(false);
+  //
+  const [buildingLayerLoaded, setBuildingLayerLoaded] = useState<any>();
 
   // Measurement tools
   const [activeAnalysis, setActiveAnalysis] = useState<any | undefined>('');
@@ -110,7 +111,11 @@ function App() {
     // map.ground.opacity = underground === true ? 0.7 : 1;
     map.ground.opacity = 0.6;
     view.environment.atmosphereEnabled = false;
-  }, [underground]);
+  }, []);
+
+  buildingLayer.load().then(() => {
+    setBuildingLayerLoaded(buildingLayer.loadStatus);
+  });
 
   useEffect(() => {
     dateUpdate().then((response: any) => {
@@ -145,7 +150,7 @@ function App() {
     <>
       <CalciteShell>
         <CalciteTabs slot="panel-end" layout="center" scale="m">
-          {!stFramingLayer ? '' : <Chart />}
+          {buildingLayerLoaded === 'loaded' ? <Chart /> : <div></div>}
         </CalciteTabs>
         <header
           slot="header"
