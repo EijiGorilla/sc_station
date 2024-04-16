@@ -1,13 +1,17 @@
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 import LabelClass from '@arcgis/core/layers/support/LabelClass';
+import UniqueValueRenderer from '@arcgis/core/renderers/UniqueValueRenderer';
 import SimpleRenderer from '@arcgis/core/renderers/SimpleRenderer';
 import {
   SimpleMarkerSymbol,
   LabelSymbol3D,
+  MeshSymbol3D,
+  FillSymbol3DLayer,
   TextSymbol3DLayer,
   SimpleLineSymbol,
 } from '@arcgis/core/symbols';
 import { labelSymbol3DLine } from './Label';
+import SolidEdges3D from '@arcgis/core/symbols/edges/SolidEdges3D';
 import BuildingSceneLayer from '@arcgis/core/layers/BuildingSceneLayer';
 
 /* Standalone table for Dates */
@@ -175,7 +179,7 @@ stationLayer.listMode = 'hide';
 /* Building Scene Layer for station structures */
 export const buildingLayer = new BuildingSceneLayer({
   portalItem: {
-    id: '0bd264819bda47e6bbd5ed2177b07228',
+    id: '3d58fd48764e48b1a145e40a5b86099f',
     portal: {
       url: 'https://gis.railway-sector.com/portal',
     },
@@ -224,6 +228,36 @@ export const popuTemplate = {
     },
   ],
 };
+
+const colorStatus = [
+  [225, 225, 225, 0.1], // To be Constructed (white)
+  [130, 130, 130, 0.5], // Under Construction
+  [255, 0, 0, 0.8], // Delayed
+  [0, 112, 255, 0.8], // Completed
+];
+
+const renderer = new UniqueValueRenderer({
+  field: 'Status',
+});
+
+for (var i = 0; i < colorStatus.length; i++) {
+  renderer.addUniqueValueInfo({
+    value: i + 1,
+    symbol: new MeshSymbol3D({
+      symbolLayers: [
+        new FillSymbol3DLayer({
+          material: {
+            color: colorStatus[i],
+            colorMixMode: 'replace',
+          },
+          edges: new SolidEdges3D({
+            color: [225, 225, 225, 0.3],
+          }),
+        }),
+      ],
+    }),
+  });
+}
 
 buildingLayer.when(() => {
   buildingLayer.allSublayers.forEach((layer: any) => {
