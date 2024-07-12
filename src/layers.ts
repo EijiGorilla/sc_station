@@ -231,7 +231,7 @@ export const popuTemplate = {
 };
 
 const colorStatus = [
-  [225, 225, 225, 0.1], // To be Constructed (white)
+  [225, 225, 225, 0.5], // To be Constructed (white), default opacity = 0.1
   [130, 130, 130, 0.5], // Under Construction
   [255, 0, 0, 0.8], // Delayed
   [0, 112, 255, 0.8], // Completed
@@ -252,7 +252,7 @@ for (var i = 0; i < colorStatus.length; i++) {
             colorMixMode: 'replace',
           },
           edges: new SolidEdges3D({
-            color: [225, 225, 225, 0.3],
+            color: [225, 225, 225, 0.8],
           }),
         }),
       ],
@@ -271,6 +271,7 @@ buildingLayer.when(() => {
         floorsLayer = layer;
         floorsLayer.popupTemplate = popuTemplate;
         floorsLayer.title = 'Floors';
+        floorsLayer.renderer = renderer;
         //excludedLayers
         break;
 
@@ -278,24 +279,28 @@ buildingLayer.when(() => {
         wallsLayer = layer;
         wallsLayer.popupTemplate = popuTemplate;
         wallsLayer.title = 'Walls';
+        wallsLayer.renderer = renderer;
         break;
 
       case 'StructuralFraming':
         stFramingLayer = layer;
         stFramingLayer.popupTemplate = popuTemplate;
         stFramingLayer.title = 'Structural Framing';
+        stFramingLayer.renderer = renderer;
         break;
 
       case 'StructuralColumns':
         stColumnLayer = layer;
         stColumnLayer.popupTemplate = popuTemplate;
         stColumnLayer.title = 'Structural Framing';
+        stColumnLayer.renderer = renderer;
         break;
 
       case 'StructuralFoundation':
         stFoundationLayer = layer;
         stFoundationLayer.popupTemplate = popuTemplate;
         stFoundationLayer.title = 'Structural Foundation';
+        stFoundationLayer.renderer = renderer;
         break;
 
       default:
@@ -306,7 +311,7 @@ buildingLayer.when(() => {
 
 // * Viaduct * //
 const colorViaduct = [
-  [225, 225, 225, 0.1], // To be Constructed (white)
+  [225, 225, 225, 0.8], // To be Constructed (white) , 0.2
   [130, 130, 130, 0.5], // Under Construction
   [255, 0, 0, 0.8], // Delayed
   [0, 112, 255, 0.8], // Completed

@@ -203,7 +203,7 @@ function App() {
             <CalciteAction
               data-action-id="layers"
               icon="layers"
-              text="layers"
+              text="Layers"
               id="layers"
               //textEnabled={true}
               onClick={(event: any) => {
